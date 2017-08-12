@@ -1,17 +1,17 @@
-var utils = require('./utils')
-var webpack = require('webpack')
-var config = require('../config')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var utils = require('./utils') //引入工具函数
+var webpack = require('webpack') //引入webpack
+var config = require('../config') //引入config/index配置对象
+var merge = require('webpack-merge') //引入webpack合并
+var baseWebpackConfig = require('./webpack.base.conf')//引入基础模块
+var HtmlWebpackPlugin = require('html-webpack-plugin')//引入生成HTML文件插件
+var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')//引入报错插件
 
 // add hot-reload related code to entry chunks
-Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+Object.keys(baseWebpackConfig.entry).forEach(function (name) {//遍历几个入口文件
+  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])//得到['./build/dev-client','app']
 })
 
-module.exports = merge(baseWebpackConfig, {
+module.exports = merge(baseWebpackConfig, {//合并webpack
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
@@ -22,14 +22,15 @@ module.exports = merge(baseWebpackConfig, {
       'process.env': config.dev.env
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+//  new webpack.optimize.OccurenceOrderPlugin()//是为组件和模块分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID，通过分析ID，可以建议降低总文件的大小。
+    new webpack.HotModuleReplacementPlugin(),//启用模块热替换    配合webpack-hot-middleware中间件
+    new webpack.NoEmitOnErrorsPlugin(),//保输出资源不会包含错误
     // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({//生成html文件
       filename: 'index.html',
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin()//报错文件
   ]
 })

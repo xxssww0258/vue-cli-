@@ -62,7 +62,7 @@
     "friendly-errors-webpack-plugin": "^1.1.3","友好的错误提示插件":"",
     "shelljs": "^0.7.6","//":"unix命令行工具",
     "semver": "^5.3.0","版本比较工具":"",
-    "ora": "^1.2.0","优雅的命令函转轮":"",
+    "ora": "^1.2.0","优雅的命令行转轮":"",
     "rimraf": "^2.6.0","删除文件夹":"",
     "webpack-merge": "^4.1.0","webpack合并,可以自己封装一个合并的函数":"",
     "copy-webpack-plugin": "^4.0.1","拷贝文件用的(为什么不直接node 函数复制)":"",
@@ -71,6 +71,7 @@
     "http-proxy-middleware": "^0.17.3","代理中间件":"",
     
     "//":"-------------跨平台-----------",
+    "cross-spawn": "^5.0.1","node 的 spawn在windows下的一些问题":"",
     "opn": "^5.1.0","跨平带的shell打开文件的命令":"",
     
     "//":"-------------测试相关不是很懂-----------",
@@ -90,10 +91,9 @@
     "sinon-chai": "^2.8.0",
     "inject-loader": "^3.0.0",
     "babel-plugin-istanbul": "^4.1.1",
-    "phantomjs-prebuilt": "^2.1.14",
-    "chromedriver": "^2.27.2",
-    "cross-spawn": "^5.0.1",
-    "nightwatch": "^0.9.12",
+    "phantomjs-prebuilt": "^2.1.14","好像是让phantomjs支持Npm":"",
+    "chromedriver": "^2.27.2","Selenium测试工具的打包助手之类的吧":"",
+    "nightwatch": "^0.9.12","测试框架":"",
     "selenium-server": "^3.0.1"
   },
   "//":"自定义的一个对象，用来指定node版本",
