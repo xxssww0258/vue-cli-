@@ -1,17 +1,17 @@
-var path = require('path')
-var utils = require('./utils')
-var webpack = require('webpack')
-var config = require('../config')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var path = require('path')//引入路径模块
+var utils = require('./utils')//工具函数
+var webpack = require('webpack')//webpack
+var config = require('../config')//config.index对象
+var merge = require('webpack-merge')//webpack合并插件
+var baseWebpackConfig = require('./webpack.base.conf')//基本webpack对象
+var CopyWebpackPlugin = require('copy-webpack-plugin')//复制文件插件
+var HtmlWebpackPlugin = require('html-webpack-plugin')//自动生成html导入css js插件
+var ExtractTextPlugin = require('extract-text-webpack-plugin')//自动导出css插件
+var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')//解决extract-text-webpack-plugin代码重复问题
 
-var env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
-  : config.build.env
+var env = process.env.NODE_ENV === 'testing'//如果是测试环境的话
+  ? require('../config/test.env')//执行测试
+  : config.build.env//当前环境为开发环境
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -20,30 +20,30 @@ var webpackConfig = merge(baseWebpackConfig, {
       extract: true
     })
   },
-  devtool: config.build.productionSourceMap ? '#source-map' : false,
+  devtool: config.build.productionSourceMap ? '#source-map' : false,//是否生成source-map文件
   output: {
-    path: config.build.assetsRoot,
+    path: config.build.assetsRoot,// ./
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
+    new webpack.DefinePlugin({ //设置全局变量为production
       'process.env': env
     }),
-    new webpack.optimize.UglifyJsPlugin({
+    new webpack.optimize.UglifyJsPlugin({//压缩js
       compress: {
         warnings: false
       },
       sourceMap: true
     }),
     // extract css into its own file
-    new ExtractTextPlugin({
+    new ExtractTextPlugin({//提取css文件
       filename: utils.assetsPath('css/[name].[contenthash].css')
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
-    new OptimizeCSSPlugin({
+    new OptimizeCSSPlugin({//解决提取css文件代码重复
       cssProcessorOptions: {
         safe: true
       }
@@ -51,7 +51,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({//生成html文件 导入js css
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
         : config.build.index,
@@ -68,7 +68,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       chunksSortMode: 'dependency'
     }),
     // split vendor js into its own file
-    new webpack.optimize.CommonsChunkPlugin({
+    new webpack.optimize.CommonsChunkPlugin({//提取公共代码块
       name: 'vendor',
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
@@ -83,12 +83,12 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
-    new webpack.optimize.CommonsChunkPlugin({
+    new webpack.optimize.CommonsChunkPlugin({//再提取一次，解决hash值变动
       name: 'manifest',
       chunks: ['vendor']
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
+    new CopyWebpackPlugin([//复制静态文件
       {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
@@ -98,8 +98,8 @@ var webpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
-if (config.build.productionGzip) {
-  var CompressionWebpackPlugin = require('compression-webpack-plugin')
+if (config.build.productionGzip) {//如果启动gzip压缩
+  var CompressionWebpackPlugin = require('compression-webpack-plugin')//压缩插件
 
   webpackConfig.plugins.push(
     new CompressionWebpackPlugin({
@@ -116,8 +116,8 @@ if (config.build.productionGzip) {
   )
 }
 
-if (config.build.bundleAnalyzerReport) {
-  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+if (config.build.bundleAnalyzerReport) {//是否打印报告,可视化的结果会被展示在http://localhost:8888/
+  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin //打印报告插件https://github.com/th0r/webpack-bundle-analyzer
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 

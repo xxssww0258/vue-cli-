@@ -8,17 +8,17 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')//引入报�
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {//遍历几个入口文件
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])//得到['./build/dev-client','app']
+  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])//得到{app:['./build/dev-client','app']} 赋值给webpack的配置对象
 })
 
 module.exports = merge(baseWebpackConfig, {//合并webpack
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })//生成module对象 详情在utils
   },
   // cheap-module-eval-source-map is faster for development
-  devtool: '#cheap-module-eval-source-map',
+  devtool: '#cheap-module-eval-source-map',//生成一个只告诉你哪一行错误的map文件
   plugins: [
-    new webpack.DefinePlugin({
+    new webpack.DefinePlugin({//设置全局变量的插件
       'process.env': config.dev.env
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
@@ -31,6 +31,6 @@ module.exports = merge(baseWebpackConfig, {//合并webpack
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()//报错文件
+    new FriendlyErrorsPlugin()//报错文件插件
   ]
 })
