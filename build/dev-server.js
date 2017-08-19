@@ -35,10 +35,10 @@ var hotMiddleware = require('webpack-hot-middleware')(compiler, {//将执行后�
   heartbeat: 2000//间隔时间
 })
 // force page reload when html-webpack-plugin template changes
-compiler.plugin('compilation', function (compilation) {
-  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-    hotMiddleware.publish({ action: 'reload' })
-    cb()
+compiler.plugin('compilation', function (compilation) { //webpack的一些原生语法,一般用来写插件 应该是监听源文件
+  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) { //如果源文件改动 触发某个插件 
+    hotMiddleware.publish({ action: 'reload' })//发送一个事件给中间件，告诉他刷新
+    cb()//执行回调
   })
 })
 																				//e.g 

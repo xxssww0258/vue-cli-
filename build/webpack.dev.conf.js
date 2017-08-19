@@ -23,7 +23,7 @@ module.exports = merge(baseWebpackConfig, {//合并webpack
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
 //  new webpack.optimize.OccurenceOrderPlugin()//是为组件和模块分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID，通过分析ID，可以建议降低总文件的大小。
-    new webpack.HotModuleReplacementPlugin(),//启用模块热替换    配合webpack-hot-middleware中间件
+    new webpack.HotModuleReplacementPlugin(),//启用模块热替换    配合webpack-hot-middleware中间件 这个hot中间件从入口文件中引入,并没有在这里引入
     new webpack.NoEmitOnErrorsPlugin(),//保输出资源不会包含错误
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({//生成html文件

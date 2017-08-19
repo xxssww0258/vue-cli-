@@ -1,4 +1,5 @@
 //这个文件是一些工具函数
+//主要是为vue-loader 添加rules
 
 var path = require('path')//引入路劲模块
 var config = require('../config')//引入config.index配置对象
@@ -36,10 +37,10 @@ exports.cssLoaders = function (options) {//出口一个cssloader的配置函数
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
-    if (options.extract) {
+    if (options.extract) {//如果带了提取参数
       return ExtractTextPlugin.extract({
-        use: loaders,
-        fallback: 'vue-style-loader'
+        use: loaders,//使用  XXloader
+        fallback: 'vue-style-loader'//编译后用什么loader来提取css文件
       })
     } else {
     	console.log(['vue-style-loader'].concat(loaders))
