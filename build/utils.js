@@ -7,8 +7,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')//引入抽取css�
 
 exports.assetsPath = function (_path) { //出口一个  资源路径函数
   var assetsSubDirectory = process.env.NODE_ENV === 'production' //当为生产环境
-    ? config.build.assetsSubDirectory														//config对象中的 ./
-    : config.dev.assetsSubDirectory															//config对象中的 /
+    ? config.build.assetsSubDirectory														//config对象中的 static
+    : config.dev.assetsSubDirectory															//config对象中的 static
   return path.posix.join(assetsSubDirectory, _path)							//拼接对应的文件
 }
 

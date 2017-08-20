@@ -77,12 +77,12 @@ app.use(staticPath, express.static('./static'))// 路由监听
 var uri = 'http://localhost:' + port
 
 var _resolve
-var readyPromise = new Promise(resolve => {
-  _resolve = resolve
+var readyPromise = new Promise(resolve => {//创建一个异步操作
+  _resolve = resolve//当异步操作成功时 变更作用域
 })
 
-console.log('> Starting dev server...') //打印正在启动
-devMiddleware.waitUntilValid(() => { //启动成功后回调函数
+console.log('> Starting dev server...') 
+devMiddleware.waitUntilValid(() => { 
   console.log('> Listening at ' + uri + '\n')
   // when env is testing, don't need open it
   if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
@@ -93,9 +93,9 @@ devMiddleware.waitUntilValid(() => { //启动成功后回调函数
 
 var server = app.listen(port)//监听端口8080
 
-module.exports = {
-  ready: readyPromise,
-  close: () => {
+module.exports = { //不知道出口到哪里去,估计是给test用的
+  ready: readyPromise,//异步操作对象  应该是回调函数
+  close: () => {//关闭监听操作函数
     server.close()
   }
 }
